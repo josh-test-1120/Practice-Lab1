@@ -1,3 +1,5 @@
+import java.util.Stack;
+
 class Node{
 	   int value;
 	   Node left, right;
@@ -58,12 +60,19 @@ class Node{
 	   Prints the value of every node preorder
 	   */
 	   public void preOrderTraversal(Node root){
-		//implement in here
-		   
+		   // Initialize the current
+		   Node current = root;
+		   Stack<Node> stack = new Stack<>();
+		   System.out.println("This is the Pre-order Traversal:");
+		   // Loop to traverse the tree
+		   while (current != null || !stack.isEmpty()) {
+			   if (current == null) current = stack.pop();
+			   else if (current.right != null) stack.push(current.right);
+			   if (current.value == root.value) System.out.printf("%s",current.value);
+			   else System.out.printf(" -> %s",current.value);
+			   current = current.left;
+		   }
 	   }
-
-	   
-	   
 	   /*
 	   in-order traversal
 	   */
@@ -89,8 +98,7 @@ class Node{
 	   with a specific value
 	   */
 	   public boolean find(Node root, int key){
-		 //implement in here
-		  
+		   return false;
 	   }
 	   
 	   
@@ -100,8 +108,7 @@ class Node{
 	   with a smallest key
 	   */
 	   public int getMin(Node root){
-         //implement in here
-	      
+		   return 0;
 	   }
 	  
 	  
@@ -111,7 +118,7 @@ class Node{
 	   with a largest key
 	   */
 	   public int getMax(Node root){
-         //implement in here
+		   return 0;
 	   }
 	   
 	   
@@ -152,8 +159,6 @@ class Node{
 	   
 	}
 
-
-
 	public class TreeDemo{
 	   public static void main(String[] args){
 	      BinarySearchTree t1  = new BinarySearchTree();
@@ -165,6 +170,7 @@ class Node{
 	      t1.insert(22);
 	            
 	      System.out.print("in-order :   ");
+		  t1.preOrderTraversal(t1.root);
 	      t1.inOrderTraversal(t1.root);
 	      System.out.println();
 	           
