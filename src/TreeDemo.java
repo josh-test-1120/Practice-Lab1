@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Stack;
 
 class Node{
@@ -60,28 +61,66 @@ class Node{
 	   Prints the value of every node preorder
 	   */
 	   public void preOrderTraversal(Node root){
-		   // Initialize the current
+		   // Initialize the variables
 		   Node current = root;
 		   Stack<Node> stack = new Stack<>();
-		   System.out.println("This is the Pre-order Traversal:");
+
 		   // Loop to traverse the tree
 		   while (current != null || !stack.isEmpty()) {
-			   if (current == null) current = stack.pop();
-			   else if (current.right != null) stack.push(current.right);
+			   if (current == null) current = stack.pop(); // Get node from stack
+			   if (current.right != null) stack.push(current.right); // add right to stack
+
+			   // Output handling
 			   if (current.value == root.value) System.out.printf("%s",current.value);
 			   else System.out.printf(" -> %s",current.value);
 			   current = current.left;
 		   }
+		   System.out.print("\n"); // Send a newline to close out the string
 	   }
 	   /*
 	   in-order traversal
 	   */
 	   public void inOrderTraversal(Node root){
-	      //implement in here
+		   // Initialize the variables
+		   Node current = root;
+		   Stack<Node> stack = new Stack<>();
+		   String result = ""; // Store results in variable
+
+		   // Loop to traverse the tree
+		   while (current != null || !stack.isEmpty()) {
+			   // Get current from stack (parent)
+			   if (current == null) {
+				   current = stack.pop();
+				   // Output Handler
+				   if (result == "") result += current.value;
+				   else {
+					   result += " -> ";
+					   result += current.value;
+				   }
+				   // Move right
+				   current = current.right;
+			   }
+			   // If no left node, handle this node and then go right
+			   if (current.left == null) {
+				   // Output Handler (current node)
+				   if (result == "") result += current.value;
+				   else {
+					   result += " -> ";
+					   result += current.value;
+				   }
+				   // Move right
+				   current = current.right;
+			   }
+			   // If left exists, put current on stack and go left
+			   else {
+				   stack.push(current);
+				   current = current.left;
+			   }
+
+		   }
+		   System.out.println(result);
+		   //System.out.print("\n");
 	   }
-	   
-	   
-	   
 	   /*
 	   post-order traversal
 	   */
@@ -169,8 +208,9 @@ class Node{
 	      t1.insert(90);
 	      t1.insert(22);
 	            
-	      System.out.print("in-order :   ");
+	      System.out.println("pre-order :   ");
 		  t1.preOrderTraversal(t1.root);
+		  System.out.println("in-order :   ");
 	      t1.inOrderTraversal(t1.root);
 	      System.out.println();
 	           
