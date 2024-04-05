@@ -187,7 +187,12 @@ class Node{
 	   with a smallest key
 	   */
 	   public int getMin(Node root){
-		   return 0;
+		   // Initialize variables
+		   Node current = root;
+		   // Iterate through the tree
+		   while (current.left != null) current = current.left;
+		   // Return the minimum value
+		   return current.value;
 	   }
 
 	   /*
@@ -247,5 +252,6 @@ class Node{
 	      t1.inOrderTraversal(t1.root);
 		  System.out.println("post-order :");
 		  t1.postOrderTraversal(t1.root);
+		  System.out.printf("minimum value in tree: %s",t1.getMin(t1.root));
 	   }  
 	}
