@@ -60,7 +60,7 @@ class Node{
 	   pre-order traversal
 	   Prints the value of every node preorder
 	   */
-	   public void preOrderTraversal(Node root){
+	   public void preOrderTraversal(Node root) {
 		   // Initialize the variables
 		   Node current = root;
 		   Stack<Node> stack = new Stack<>();
@@ -80,7 +80,7 @@ class Node{
 	   /*
 	   in-order traversal
 	   */
-	   public void inOrderTraversal(Node root){
+	   public void inOrderTraversal(Node root) {
 		   // Initialize the variables
 		   Node current = root;
 		   Stack<Node> stack = new Stack<>();
@@ -91,23 +91,15 @@ class Node{
 			   // Get current from stack (parent)
 			   if (current == null) {
 				   current = stack.pop();
-				   // Output Handler
-				   if (result == "") result += current.value;
-				   else {
-					   result += " -> ";
-					   result += current.value;
-				   }
+				   // Concatenate node to reference map
+				   result = pushString(current.value,result);
 				   // Move right
 				   current = current.right;
 			   }
 			   // If no left node, handle this node and then go right
-			   if (current.left == null) {
-				   // Output Handler (current node)
-				   if (result == "") result += current.value;
-				   else {
-					   result += " -> ";
-					   result += current.value;
-				   }
+			   else if (current.left == null) {
+				   // Concatenate node to reference map
+				   result = pushString(current.value,result);
 				   // Move right
 				   current = current.right;
 			   }
@@ -119,19 +111,69 @@ class Node{
 
 		   }
 		   System.out.println(result);
-		   //System.out.print("\n");
 	   }
 	   /*
 	   post-order traversal
 	   */
 	  
-	   public void postOrderTraversal(Node root){
-         //implement in here
-		   
+	   public void postOrderTraversal(Node root) {
+		   // Initialize the variables
+		   Node current = root;
+		   Stack<Node> stack = new Stack<>();
+		   String result = ""; // Store results in variable
+
+		   // Loop to traverse the tree
+		   while (current != null || !stack.isEmpty()) {
+			   // Get current from stack (parent)
+			   if (current == null) {
+				   current = stack.pop();
+				   // Check to see if right have been checked before
+				   boolean exists = false;
+				   if (current.right != null) {
+					   exists = result.contains(String.valueOf(current.right.value));
+				   }
+				   // If already existing in the result path
+				   if (exists) {
+					   // Concatenate node to reference map
+					   result = pushString(current.value,result);
+					   current = null; // Set to null to speed up traversal
+				   }
+				   // else we save it for final processing
+				   else {
+					   // Push to stack again for return checks
+					   stack.push(current);
+					   current = current.right; // Move right
+				   }
+			   }
+			   // Handle the current node
+			   else {
+				   // If leaf node
+				   if (current.left == null && current.right == null) {
+					   result = pushString(current.value,result);
+					   current = null;
+				   }
+				   // else push to stack and move left
+				   else {
+					   stack.push(current);
+					   current = current.left;
+				   }
+			   }
+		   }
+		   // Output the results
+		   System.out.println(result);
 	   }
-	   
-	   
-	   
+	   // Handles String concatenation
+	   public String pushString(int data, String result) {
+		   // Push the string alone if empty
+		   if (result == "") result += data;
+		   // else make it like a reference map
+		   else {
+			   result += " -> ";
+			   result += data;
+		   }
+		   return result;
+	   }
+
 	   /*
 	   a method to find the node in the tree
 	   with a specific value
@@ -139,9 +181,7 @@ class Node{
 	   public boolean find(Node root, int key){
 		   return false;
 	   }
-	   
-	   
-	   
+
 	   /*
 	   a method to find the node in the tree
 	   with a smallest key
@@ -149,9 +189,7 @@ class Node{
 	   public int getMin(Node root){
 		   return 0;
 	   }
-	  
-	  
-	  
+
 	   /*
 	   a method to find the node in the tree
 	   with a largest key
@@ -159,9 +197,7 @@ class Node{
 	   public int getMax(Node root){
 		   return 0;
 	   }
-	   
-	   
-	   
+
 	   /*
 	   this method will not compile until getMax
 	   is implemented
@@ -193,9 +229,6 @@ class Node{
 	      }
 	      return root;  
 	   }
-	   
-	   
-	   
 	}
 
 	public class TreeDemo{
@@ -208,12 +241,11 @@ class Node{
 	      t1.insert(90);
 	      t1.insert(22);
 	            
-	      System.out.println("pre-order :   ");
+	      System.out.println("pre-order :");
 		  t1.preOrderTraversal(t1.root);
-		  System.out.println("in-order :   ");
+		  System.out.println("in-order :");
 	      t1.inOrderTraversal(t1.root);
-	      System.out.println();
-	           
-	      
+		  System.out.println("post-order :");
+		  t1.postOrderTraversal(t1.root);
 	   }  
 	}
