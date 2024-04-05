@@ -179,7 +179,7 @@ class Node{
 	   with a specific value
 	   */
 	   public boolean find(Node root, int key){
-		   return false;
+
 	   }
 
 	   /*
@@ -200,7 +200,12 @@ class Node{
 	   with a largest key
 	   */
 	   public int getMax(Node root){
-		   return 0;
+		   // Initialize variables
+		   Node current = root;
+		   // Iterate through the tree
+		   while (current.right != null) current = current.right;
+		   // Return the maximum value
+		   return current.value;
 	   }
 
 	   /*
@@ -252,6 +257,9 @@ class Node{
 	      t1.inOrderTraversal(t1.root);
 		  System.out.println("post-order :");
 		  t1.postOrderTraversal(t1.root);
-		  System.out.printf("minimum value in tree: %s",t1.getMin(t1.root));
+		  System.out.printf("minimum value in tree: %s\n",t1.getMin(t1.root));
+		  System.out.printf("maximum value in tree: %s\n",t1.getMax(t1.root));
+//		  System.out.printf("does %s exist in tree: %s\n",90,t1.find(t1.root,90));
+//		  System.out.printf("does %s exist in tree: %s\n",50,t1.find(t1.root,50));
 	   }  
 	}
